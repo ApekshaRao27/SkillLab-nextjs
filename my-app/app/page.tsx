@@ -231,6 +231,7 @@ export default function Home() {
 }
   */
 
+/*
 'use client';
 import {useEffect,useState} from "react";
 interface User{
@@ -315,4 +316,83 @@ export default function UsersPage(){
       </div>
     </div>
   )
+}
+  */
+/*
+"use client";
+
+import { useState } from "react";
+import ProductList from "@/components/ProductList";
+import { products } from "@/features/product/data";
+import { Product } from "@/types/product";
+import { useCartStore } from "@/store/cartStore";
+import Link from "next/link";
+
+export default function Home() {
+  without zustand
+  const [cart, setCart] = useState<Product[]>([]);
+  
+  const cart=useCartStore((state)=>state.cart);
+  const addTocart=useCartStore((state)=>state.addToCart);
+ without zustand
+  const addToCart = (product: Product) => {
+    setCart([...cart, product]);
+  }
+    
+
+  return(
+    <main className="min-h-screen bg-gray-100 p-8">
+      <h1 className="text-3xl font-bold mb-6 text-center">Product List</h1>
+      <p className="text-2xl font-bold">cart Length:{cart.length}</p>
+      <ProductList products={products} onAdd={addTocart} />
+      <Link href="/cart" className="text-blue-500 mt-4 inline-block">Go to Cart</Link>
+      <div className="mt-8 max-w-3xl mx-auto">
+        <h2 className="text-2xl font-bold mb-4">Zustand Shopping Cart</h2>
+        
+        {cart.length === 0 ? (
+          <p>Your cart is empty.</p>
+        ) : (
+          <ul className="bg-white p-4 rounded shadow">
+            {cart.map((item, index) => (
+              <li key={index} className="border-b py-2">
+                {item.name} - ${item.price}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </main>
+  )
+}
+*/
+
+"use client"
+import Link from "next/link";
+import { useState } from "react";
+import ProductList from "@/components/ProductList";
+import { products } from "@/features/product/data";
+import { Product } from "@/types/product";
+import { useCartStore } from "@/store/cartStore";
+
+export default function Home() {
+const cart=useCartStore((state)=>state.cart);
+  const addTocart=useCartStore((state)=>state.addToCart);  
+
+  return (
+    <main className="min-h-screen bg-gray-100 p-10">
+      <h1 className="text-3xl font-bold ">
+        Zustand Cart Project</h1>
+        <p className="mt-4">
+          Cart Item: {cart.length} </p>
+      <ProductList products={products} 
+      onAdd={addTocart}
+      />
+      <Link
+        href="/cart"
+        className="mt-6 inline-block bg-green-600 text-white px-4 py-2 rounded"
+      >
+        Go To Cart Page
+      </Link>
+      </main>
+  );
 }
